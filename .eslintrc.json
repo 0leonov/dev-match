@@ -9,7 +9,7 @@
     "plugin:prettier/recommended",
     "prettier"
   ],
-  "ignorePatterns": ["src/components/ui"],
+  "ignorePatterns": ["src/shared/components/ui"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
