@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1714411771613,
+      "tag": "0000_bitter_silvermane",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1714411945407,
+      "tag": "0001_adorable_pretty_boy",
+      "breakpoints": true
+    }
+  ]
+}
