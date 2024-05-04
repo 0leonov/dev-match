@@ -67,7 +67,7 @@ export const posts = pgTable("post", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   content: text("content"),
-  createdAt: date("birthdate").defaultNow().notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
 });
 
 export type Post = typeof posts.$inferSelect;

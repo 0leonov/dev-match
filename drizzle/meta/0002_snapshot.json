@@ -1,5 +1,5 @@
 {
-  "id": "43af4e58-270b-47df-a812-baef909da8e8",
+  "id": "bcc311e6-dc2b-4346-8829-fffd944aa19c",
   "prevId": "2324529c-c9e6-42a1-8c46-98d81a37703c",
   "version": "5",
   "dialect": "pg",
@@ -117,9 +117,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "birthdate": {
-          "name": "birthdate",
-          "type": "date",
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
