@@ -15,6 +15,13 @@
       "when": 1714411945407,
       "tag": "0001_adorable_pretty_boy",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1714808499174,
+      "tag": "0002_massive_loners",
+      "breakpoints": true
     }
   ]
 }
