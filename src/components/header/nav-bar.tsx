@@ -7,7 +7,13 @@ import { routes } from "@/lib/routes";
 
 import { NavBarLink } from "./nav-bar-link";
 
-export function NavBar({ className }: { className?: string }) {
+export function NavBar({
+  username,
+  className,
+}: {
+  username: string;
+  className?: string;
+}) {
   const pathname = usePathname();
 
   return (
@@ -15,7 +21,7 @@ export function NavBar({ className }: { className?: string }) {
       <ul className="flex gap-4">
         <li>
           <NavBarLink
-            href={routes.profile}
+            href={`/users/${username}`}
             isActive={pathname.startsWith(routes.profile)}
           >
             <User />
