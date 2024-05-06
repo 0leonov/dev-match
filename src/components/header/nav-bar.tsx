@@ -3,8 +3,6 @@
 import { User } from "lucide-react";
 import { usePathname } from "next/navigation";
 
-import { routes } from "@/lib/routes";
-
 import { NavBarLink } from "./nav-bar-link";
 
 export function NavBar({
@@ -22,7 +20,7 @@ export function NavBar({
         <li>
           <NavBarLink
             href={`/users/${username}`}
-            isActive={pathname.startsWith(routes.profile)}
+            isActive={pathname.startsWith(`/users/${username}`)}
           >
             <User />
           </NavBarLink>
