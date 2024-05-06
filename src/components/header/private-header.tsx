@@ -1,7 +1,7 @@
 import { AlignJustify, LogOut, User } from "lucide-react";
 import Link from "next/link";
 
-import { signOut } from "@/auth";
+import { auth, signOut } from "@/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,56 +15,64 @@ import { routes } from "@/lib/routes";
 import { HomeLink } from "./home-link";
 import { NavBar } from "./nav-bar";
 
-export function PrivateHeader() {
+export async function PrivateHeader() {
+  const session = await auth();
+
+  if (!session) {
+    return null;
+  }
+
   return (
-    <div className="container sticky top-0 z-20 grid grid-cols-2 bg-background/80 py-4 backdrop-blur sm:grid-cols-[1fr,_max-content,_1fr]">
-      <div className="flex items-center">
-        <HomeLink href={routes.home} />
-      </div>
+    <header className="sticky top-0 z-20 py-4 backdrop-blur">
+      <div className="container grid grid-cols-2 sm:grid-cols-[1fr,_max-content,_1fr]">
+        <div className="flex items-center">
+          <HomeLink href={routes.home} />
+        </div>
 
-      <NavBar className="hidden sm:block" />
+        <NavBar username={session.user.username!} className="hidden sm:block" />
 
-      <div className="flex justify-end">
-        <DropdownMenu>
-          <DropdownMenuTrigger className="h-11 px-1 text-muted-foreground transition-colors hover:text-foreground">
-            <AlignJustify />
-          </DropdownMenuTrigger>
+        <div className="flex justify-end">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="h-11 px-1 text-muted-foreground transition-colors hover:text-foreground">
+              <AlignJustify />
+            </DropdownMenuTrigger>
 
-          <DropdownMenuContent align="end">
-            <div className="sm:hidden">
-              <DropdownMenuItem asChild>
-                <Link href={routes.profile}>
-                  <User className="mr-2 size-4" />
+            <DropdownMenuContent align="end">
+              <div className="sm:hidden">
+                <DropdownMenuItem asChild>
+                  <Link href={`/users/${session.user.username}`}>
+                    <User className="mr-2 size-4" />
 
-                  <span>Profile</span>
-                </Link>
-              </DropdownMenuItem>
+                    <span>Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuSeparator />
+              </div>
+
+              <DropdownThemeToggle />
 
               <DropdownMenuSeparator />
-            </div>
 
-            <DropdownThemeToggle />
+              <form
+                action={async () => {
+                  "use server";
 
-            <DropdownMenuSeparator />
+                  await signOut({ redirectTo: routes.welcome });
+                }}
+              >
+                <DropdownMenuItem asChild>
+                  <button className="w-full">
+                    <LogOut className="mr-2 size-4" />
 
-            <form
-              action={async () => {
-                "use server";
-
-                await signOut({ redirectTo: routes.welcome });
-              }}
-            >
-              <DropdownMenuItem asChild>
-                <button className="w-full">
-                  <LogOut className="mr-2 size-4" />
-
-                  <span>Log out</span>
-                </button>
-              </DropdownMenuItem>
-            </form>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                    <span>Log out</span>
+                  </button>
+                </DropdownMenuItem>
+              </form>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
-    </div>
+    </header>
   );
 }

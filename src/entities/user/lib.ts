@@ -1,8 +1,9 @@
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 import { db, users } from "@/db";
 
-import { UpdateUserSchema, updateUserSchema } from "./update-user-schema";
+import { type UpdateUserSchema, updateUserSchema } from "./update-user-schema";
 
 export async function getUserById(id: string) {
   const [user] = await db.select().from(users).where(eq(users.id, id)).limit(1);
@@ -35,5 +36,7 @@ export async function updateUser(id: string, data: UpdateUserSchema) {
     }
   }
 
-  return await db.update(users).set(data).where(eq(users.id, id)).returning();
+  await db.update(users).set(data).where(eq(users.id, id));
+
+  revalidatePath(`/users/${parsedData.data.username}`);
 }
