@@ -5,7 +5,6 @@ export const routes = {
   terms: "/terms",
   signIn: "/login",
   completeRegistration: "/complete-registration",
-  profile: "/profile",
   editProfile: "/profile/edit",
 };
 

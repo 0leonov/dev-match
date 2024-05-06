@@ -2,8 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { auth } from "@/auth";
+import { PostList } from "@/components/post-list";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
+import { getPostsByAuthor } from "@/entities/post";
 import { getUserByUsername } from "@/entities/user";
 import { routes } from "@/lib/routes";
 
@@ -22,11 +24,13 @@ export default async function Profile({
 
   const isCurrentUser = session?.user.username === user.username;
 
+  const posts = await getPostsByAuthor(user.id);
+
   return (
-    <main className="container flex py-8">
-      <aside className="max-w-64 rounded-lg border bg-card">
+    <main className="container grid gap-8 py-8 sm:grid-cols-[16rem,_1fr] lg:grid-cols-[16rem,_1fr,_16rem]">
+      <aside className="top-[6.75rem] h-fit rounded-lg border bg-card shadow-sm sm:sticky">
         <div className="relative border-b p-8 text-center">
-          <Avatar className="size-48 outline outline-offset-4 outline-border">
+          <Avatar className="mx-auto size-48 outline outline-offset-4 outline-border">
             <AvatarImage src={user.image ?? undefined} />
 
             <AvatarFallback>
@@ -61,6 +65,11 @@ export default async function Profile({
           </div>
         </div>
       </aside>
+
+      <PostList
+        posts={posts}
+        className="mx-auto w-full max-w-screen-sm sm:col-start-2"
+      />
     </main>
   );
 }
