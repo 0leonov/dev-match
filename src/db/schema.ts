@@ -63,7 +63,7 @@ export const posts = pgTable("post", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  authorId: text("userId")
+  authorId: text("authorId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   content: text("content"),
