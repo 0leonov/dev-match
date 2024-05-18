@@ -72,3 +72,45 @@ export const posts = pgTable("post", {
 
 export type Post = typeof posts.$inferSelect;
 export type NewPost = typeof posts.$inferInsert;
+
+export const connections = pgTable(
+  "connection",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    connectedUserId: text("connectedUserId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (connection) => ({
+    compoundKey: primaryKey({
+      columns: [connection.userId, connection.connectedUserId],
+    }),
+  }),
+);
+
+export type Connection = typeof connections.$inferSelect;
+export type NewConnection = typeof connections.$inferInsert;
+
+export const connectionRequests = pgTable(
+  "connectionRequest",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    targetId: text("targetId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (connectionRequest) => ({
+    compoundKey: primaryKey({
+      columns: [connectionRequest.userId, connectionRequest.targetId],
+    }),
+  }),
+);
+
+export type ConnectionRequest = typeof connectionRequests.$inferSelect;
+export type NewConnectionRequest = typeof connectionRequests.$inferInsert;

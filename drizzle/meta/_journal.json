@@ -29,6 +29,13 @@
       "when": 1715249623022,
       "tag": "0003_windy_viper",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1715319348138,
+      "tag": "0004_legal_oracle",
+      "breakpoints": true
     }
   ]
 }
