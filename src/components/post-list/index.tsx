@@ -13,11 +13,11 @@ export function PostList({
   return (
     <section className={className}>
       {posts.map((props, index) => (
-        <>
+        <div key={crypto.randomUUID()}>
           {index > 0 && <Separator className="my-6" />}
 
-          <PostCard key={crypto.randomUUID()} className="px-2" {...props} />
-        </>
+          <PostCard className="px-2" {...props} />
+        </div>
       ))}
     </section>
   );
