@@ -29,7 +29,6 @@ export const users = pgTable("user", {
   roles: roleEnum("roles")
     .array()
     .default(sql`ARRAY['user']::role[]`),
-  registrationCompleted: timestamp("registrationCompleted", { mode: "date" }),
 });
 
 export const accounts = pgTable(
@@ -86,7 +85,7 @@ export const connections = pgTable(
 );
 
 export const connectionRequests = pgTable(
-  "connectionRequest",
+  "connection_request",
   {
     userId: text("userId")
       .notNull()

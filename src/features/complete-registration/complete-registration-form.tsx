@@ -19,21 +19,12 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import {
   CompleteRegistrationSchema,
   completeRegistrationSchema,
@@ -53,9 +44,6 @@ export function CompleteRegistrationForm() {
     resolver: zodResolver(completeRegistrationSchema),
     defaultValues: {
       username: "",
-      bio: "",
-      gender: "not_specified",
-      birthdate: "",
     },
   });
 
@@ -78,14 +66,14 @@ export function CompleteRegistrationForm() {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card>
           <CardHeader>
-            <CardTitle>Create your account</CardTitle>
+            <CardTitle>Create you account</CardTitle>
 
             <CardDescription>
-              Enter your information to create an account
+              Choose a unique username to complete your profile
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="space-y-4">
+          <CardContent>
             <FormField
               control={form.control}
               name="username"
@@ -96,89 +84,6 @@ export function CompleteRegistrationForm() {
                   <FormControl>
                     <Input placeholder="username" {...field} />
                   </FormControl>
-
-                  <FormDescription>
-                    This is name to identify you on the platform
-                  </FormDescription>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="bio"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Bio</FormLabel>
-
-                  <FormControl>
-                    <Textarea
-                      placeholder="Tell us a little bit about yourself"
-                      className="resize-none"
-                      {...field}
-                    />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="gender"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel>Gender</FormLabel>
-
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                      </FormControl>
-
-                      <SelectContent>
-                        <SelectItem value="not_specified">
-                          Prefer not to say
-                        </SelectItem>
-
-                        <SelectItem value="male">Male</SelectItem>
-
-                        <SelectItem value="female">Female</SelectItem>
-                      </SelectContent>
-                    </Select>
-
-                    <FormDescription>
-                      This is used to personalize your experience
-                    </FormDescription>
-
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-            />
-
-            <FormField
-              control={form.control}
-              name="birthdate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Birth date</FormLabel>
-
-                  <FormControl>
-                    <Input type="date" {...field} />
-                  </FormControl>
-
-                  <FormDescription>
-                    This is used to calculate your age
-                  </FormDescription>
 
                   <FormMessage />
                 </FormItem>

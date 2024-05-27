@@ -11,10 +11,7 @@ export async function completeRegistration(data: CompleteRegistrationSchema) {
   }
 
   try {
-    await updateUser(session.user.id, {
-      ...data,
-      registrationCompleted: new Date(),
-    });
+    await updateUser(session.user.id, { ...data });
   } catch (error) {
     return {
       success: false,

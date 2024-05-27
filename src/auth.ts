@@ -36,7 +36,7 @@ export const config = {
       const isCompleteRegistrationRoute =
         request.nextUrl.pathname === routes.completeRegistration;
 
-      if (!auth.user.registrationCompleted && !isCompleteRegistrationRoute) {
+      if (!auth.user.username && !isCompleteRegistrationRoute) {
         return NextResponse.redirect(
           new URL(
             `${routes.completeRegistration}?callbackUrl=${encodeURIComponent(request.url)}`,
@@ -45,7 +45,7 @@ export const config = {
         );
       }
 
-      if (isCompleteRegistrationRoute && auth.user.registrationCompleted) {
+      if (isCompleteRegistrationRoute && auth.user.username) {
         return NextResponse.redirect(new URL(routes.home, request.nextUrl));
       }
 
