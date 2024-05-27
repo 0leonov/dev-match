@@ -8,35 +8,30 @@ export async function createConnectionRequest(
   userId: string,
   targetId: string,
 ) {
+  const existingRequest =
+    (await getConnectionRequest(userId, targetId)) ||
+    (await getConnectionRequest(targetId, userId));
+
+  if (existingRequest) {
+    throw new Error("Connection request already exists");
+  }
+
+  await db.insert(connectionRequests).values({ userId, targetId });
+
   const [user] = await db
     .select({ username: users.username })
     .from(users)
     .where(eq(users.id, targetId))
     .limit(1);
 
-  if (!user) {
-    throw new Error("User not found");
-  }
-
-  await db.insert(connectionRequests).values({ userId, targetId });
-
   revalidatePath(`/users/${user.username}`);
+  revalidatePath(`/notifications`);
 }
 
 export async function deleteConnectionRequest(
   userId: string,
   targetId: string,
 ) {
-  const [user] = await db
-    .select({ username: users.username })
-    .from(users)
-    .where(eq(users.id, targetId))
-    .limit(1);
-
-  if (!user) {
-    throw new Error("User not found");
-  }
-
   await db
     .delete(connectionRequests)
     .where(
@@ -46,13 +41,20 @@ export async function deleteConnectionRequest(
       ),
     );
 
+  const [user] = await db
+    .select({ username: users.username })
+    .from(users)
+    .where(eq(users.id, targetId))
+    .limit(1);
+
   revalidatePath(`/users/${user.username}`);
+  revalidatePath(`/notifications`);
 }
 
 export async function getConnectionRequest(userId: string, targetId: string) {
   const targetUser = alias(users, "targetUser");
 
-  return db
+  const [result] = await db
     .select({
       targetId: targetUser.id,
       targetName: targetUser.name,
@@ -71,5 +73,21 @@ export async function getConnectionRequest(userId: string, targetId: string) {
       ),
     )
     .leftJoin(users, eq(users.id, connectionRequests.userId))
-    .leftJoin(targetUser, eq(targetUser.id, connectionRequests.targetId));
+    .leftJoin(targetUser, eq(targetUser.id, connectionRequests.targetId))
+    .limit(1);
+
+  return result;
+}
+
+export async function getConnectionRequests(targetId: string) {
+  return db
+    .select({
+      userId: users.id,
+      userName: users.name,
+      userUsername: users.username,
+      userAvatar: users.image,
+    })
+    .from(connectionRequests)
+    .where(eq(connectionRequests.targetId, targetId))
+    .leftJoin(users, eq(users.id, connectionRequests.userId));
 }

@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useOptimistic } from "react";
+import { useOptimistic, useTransition } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { request, withdraw } from "@/features/connect";
+import { accept, request, withdraw } from "@/features/connect";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 
-type Action = "connect" | "withdraw" | "edit";
+export type Action = "connect" | "withdraw" | "edit" | "accept" | "message";
 
 export function SideBar({
   id,
@@ -35,14 +35,27 @@ export function SideBar({
     (_, action: Action) => action,
   );
 
-  async function handleConnect() {
-    toggleOptimisticAction("withdraw");
-    await request(id);
+  const [, startTransition] = useTransition();
+
+  function handleConnect() {
+    startTransition(async () => {
+      toggleOptimisticAction("withdraw");
+      await request(id);
+    });
   }
 
-  async function handleWithdraw() {
-    toggleOptimisticAction("connect");
-    await withdraw(id);
+  function handleWithdraw() {
+    startTransition(async () => {
+      toggleOptimisticAction("connect");
+      await withdraw(id);
+    });
+  }
+
+  function handleAccept() {
+    startTransition(async () => {
+      toggleOptimisticAction("message");
+      await accept(id);
+    });
   }
 
   return (
@@ -81,12 +94,22 @@ export function SideBar({
               Withdraw
             </Button>
           )}
+
+          {optimisticAction === "accept" && (
+            <Button onClick={handleAccept} variant="outline">
+              Accept
+            </Button>
+          )}
+
+          {optimisticAction === "message" && (
+            <Button variant="outline">Message</Button>
+          )}
         </div>
       </div>
 
       <div className="p-8">
         <div className="text-center">
-          <p className="text-2xl font-bold">{connectionCount ?? 0}</p>
+          <p className="text-2xl font-bold">{connectionCount}</p>
           <p className="text-sm text-muted-foreground">Connections</p>
         </div>
       </div>

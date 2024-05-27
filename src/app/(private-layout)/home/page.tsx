@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { getPosts } from "@/entities/post";
 
-import PostSection from "./post-section";
+import { PostSection } from "./post-section";
 
 export default async function Home() {
   const session = await auth();

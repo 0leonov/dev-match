@@ -32,7 +32,12 @@ export function PostCard({
       <div className="text-sm">
         <h3 className="font-semibold">{authorName}</h3>
 
-        <h2 className="text-muted-foreground">@{authorUsername}</h2>
+        <Link
+          href={`/users/${authorUsername}`}
+          className="text-muted-foreground"
+        >
+          @{authorUsername}
+        </Link>
       </div>
 
       <p className="col-start-2 whitespace-break-spaces">{content}</p>

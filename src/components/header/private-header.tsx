@@ -1,4 +1,4 @@
-import { AlignJustify, LogOut, User } from "lucide-react";
+import { AlignJustify, Bell, LogOut, User } from "lucide-react";
 import Link from "next/link";
 
 import { auth, signOut } from "@/auth";
@@ -44,6 +44,14 @@ export async function PrivateHeader() {
                     <User className="mr-2 size-4" />
 
                     <span>Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem asChild>
+                  <Link href={`/notification`}>
+                    <Bell className="mr-2 size-4" />
+
+                    <span>Notification</span>
                   </Link>
                 </DropdownMenuItem>
 

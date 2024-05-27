@@ -2,11 +2,12 @@ import { notFound } from "next/navigation";
 
 import { auth } from "@/auth";
 import { PostList } from "@/components/post-list";
+import { getConnectionCount, isConnected } from "@/entities/connection";
 import { getConnectionRequest } from "@/entities/connection-request";
 import { getPostsByAuthor } from "@/entities/post";
 import { getUserByUsername } from "@/entities/user";
 
-import { SideBar } from "./side-bar";
+import { Action, SideBar } from "./side-bar";
 
 export default async function Profile({
   params,
@@ -25,20 +26,23 @@ export default async function Profile({
     throw new Error("Unauthorized");
   }
 
-  const isCurrentUser = session.user.username === user.username;
+  let action: Action;
 
-  const connectionRequest = await getConnectionRequest(
-    session.user.id,
-    user.id,
-  );
-
-  const action = isCurrentUser
-    ? "edit"
-    : connectionRequest.length
-      ? "withdraw"
-      : "connect";
+  if (session.user.username === user.username) {
+    action = "edit";
+  } else if (await getConnectionRequest(session.user.id, user.id)) {
+    action = "withdraw";
+  } else if (await getConnectionRequest(user.id, session.user.id)) {
+    action = "accept";
+  } else if (await isConnected(user.id, session.user.id)) {
+    action = "message";
+  } else {
+    action = "connect";
+  }
 
   const posts = await getPostsByAuthor(user.id);
+
+  const connectionCount = await getConnectionCount(user.id);
 
   return (
     <main className="container grid gap-8 py-8 sm:grid-cols-[16rem,_1fr] lg:grid-cols-[16rem,_1fr,_16rem]">
@@ -50,6 +54,7 @@ export default async function Profile({
         name={user.name!}
         image={user.image!}
         bio={user.bio!}
+        connectionCount={connectionCount}
       />
 
       <PostList

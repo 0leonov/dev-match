@@ -8,7 +8,7 @@ import type { CreatePostSchema, Post } from "@/entities/post";
 import { CreatePostForm } from "@/features/create-post";
 import { createPost } from "@/features/create-post/actions";
 
-export default function PostSection({
+export function PostSection({
   posts,
   authorName,
   authorUsername,
