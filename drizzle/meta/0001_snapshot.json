@@ -1,10 +1,8 @@
 {
-  "id": "2324529c-c9e6-42a1-8c46-98d81a37703c",
-  "prevId": "f3fa58f5-a5f8-48bd-af17-e6d025b48e79",
-  "version": "5",
-  "dialect": "pg",
+  "version": "6",
+  "dialect": "postgresql",
   "tables": {
-    "account": {
+    "public.account": {
       "name": "account",
       "schema": "",
       "columns": {
@@ -80,11 +78,11 @@
         "account_userId_user_id_fk": {
           "name": "account_userId_user_id_fk",
           "tableFrom": "account",
-          "tableTo": "user",
           "columnsFrom": ["userId"],
+          "tableTo": "user",
           "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {
@@ -95,7 +93,7 @@
       },
       "uniqueConstraints": {}
     },
-    "user": {
+    "public.user": {
       "name": "user",
       "schema": "",
       "columns": {
@@ -174,33 +172,30 @@
       "uniqueConstraints": {
         "user_username_unique": {
           "name": "user_username_unique",
-          "nullsNotDistinct": false,
-          "columns": ["username"]
+          "columns": ["username"],
+          "nullsNotDistinct": false
         }
       }
     }
   },
   "enums": {
-    "gender": {
+    "public.gender": {
       "name": "gender",
-      "values": {
-        "not_specified": "not_specified",
-        "male": "male",
-        "female": "female"
-      }
+      "schema": "public",
+      "values": ["not_specified", "male", "female"]
     },
-    "role": {
+    "public.role": {
       "name": "role",
-      "values": {
-        "user": "user",
-        "admin": "admin"
-      }
+      "schema": "public",
+      "values": ["user", "admin"]
     }
   },
   "schemas": {},
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
-  }
+    "tables": {},
+    "columns": {}
+  },
+  "id": "2324529c-c9e6-42a1-8c46-98d81a37703c",
+  "prevId": "f3fa58f5-a5f8-48bd-af17-e6d025b48e79"
 }

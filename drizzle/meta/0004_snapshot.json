@@ -1,10 +1,10 @@
 {
-  "id": "8b959fd9-96fe-402b-9268-56e3539173de",
+  "id": "ebfd09a5-05ec-47f1-a26f-299618444215",
   "prevId": "1f49bc64-7079-4f43-8129-e4a22cf8c00e",
-  "version": "5",
-  "dialect": "pg",
+  "version": "6",
+  "dialect": "postgresql",
   "tables": {
-    "account": {
+    "public.account": {
       "name": "account",
       "schema": "",
       "columns": {
@@ -95,7 +95,7 @@
       },
       "uniqueConstraints": {}
     },
-    "connectionRequest": {
+    "public.connectionRequest": {
       "name": "connectionRequest",
       "schema": "",
       "columns": {
@@ -148,7 +148,7 @@
       },
       "uniqueConstraints": {}
     },
-    "connection": {
+    "public.connection": {
       "name": "connection",
       "schema": "",
       "columns": {
@@ -201,7 +201,7 @@
       },
       "uniqueConstraints": {}
     },
-    "post": {
+    "public.post": {
       "name": "post",
       "schema": "",
       "columns": {
@@ -246,7 +246,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "user": {
+    "public.user": {
       "name": "user",
       "schema": "",
       "columns": {
@@ -301,6 +301,7 @@
         "gender": {
           "name": "gender",
           "type": "gender",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
           "default": "'not_specified'"
@@ -332,20 +333,15 @@
     }
   },
   "enums": {
-    "gender": {
+    "public.gender": {
       "name": "gender",
-      "values": {
-        "not_specified": "not_specified",
-        "male": "male",
-        "female": "female"
-      }
+      "schema": "public",
+      "values": ["not_specified", "male", "female"]
     },
-    "role": {
+    "public.role": {
       "name": "role",
-      "values": {
-        "user": "user",
-        "admin": "admin"
-      }
+      "schema": "public",
+      "values": ["user", "admin"]
     }
   },
   "schemas": {},

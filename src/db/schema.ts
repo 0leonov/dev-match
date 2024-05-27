@@ -32,9 +32,6 @@ export const users = pgTable("user", {
   registrationCompleted: timestamp("registrationCompleted", { mode: "date" }),
 });
 
-export type User = typeof users.$inferSelect;
-export type NewUser = typeof users.$inferInsert;
-
 export const accounts = pgTable(
   "account",
   {
@@ -70,9 +67,6 @@ export const posts = pgTable("post", {
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
 });
 
-export type Post = typeof posts.$inferSelect;
-export type NewPost = typeof posts.$inferInsert;
-
 export const connections = pgTable(
   "connection",
   {
@@ -90,9 +84,6 @@ export const connections = pgTable(
     }),
   }),
 );
-
-export type Connection = typeof connections.$inferSelect;
-export type NewConnection = typeof connections.$inferInsert;
 
 export const connectionRequests = pgTable(
   "connectionRequest",
@@ -112,5 +103,4 @@ export const connectionRequests = pgTable(
   }),
 );
 
-export type ConnectionRequest = typeof connectionRequests.$inferSelect;
-export type NewConnectionRequest = typeof connectionRequests.$inferInsert;
+export type User = typeof users.$inferSelect;

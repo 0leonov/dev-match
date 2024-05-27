@@ -13,25 +13,25 @@ CREATE TABLE IF NOT EXISTS "connection" (
 );
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "connectionRequest" ADD CONSTRAINT "connectionRequest_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "connectionRequest" ADD CONSTRAINT "connectionRequest_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "connectionRequest" ADD CONSTRAINT "connectionRequest_targetId_user_id_fk" FOREIGN KEY ("targetId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "connectionRequest" ADD CONSTRAINT "connectionRequest_targetId_user_id_fk" FOREIGN KEY ("targetId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "connection" ADD CONSTRAINT "connection_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "connection" ADD CONSTRAINT "connection_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "connection" ADD CONSTRAINT "connection_connectedUserId_user_id_fk" FOREIGN KEY ("connectedUserId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "connection" ADD CONSTRAINT "connection_connectedUserId_user_id_fk" FOREIGN KEY ("connectedUserId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
