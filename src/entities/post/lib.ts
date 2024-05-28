@@ -3,7 +3,6 @@ import { revalidatePath } from "next/cache";
 
 import { db, posts, users } from "@/db";
 import { getUserById } from "@/entities/user";
-import { routes } from "@/lib/routes";
 
 import { type CreatePostSchema, createPostSchema } from "./create-post-schema";
 
@@ -49,5 +48,5 @@ export async function createPost(data: CreatePostSchema, authorId: string) {
 
   revalidatePath(`/users/${author.username}`);
 
-  revalidatePath(routes.home);
+  revalidatePath("/home");
 }

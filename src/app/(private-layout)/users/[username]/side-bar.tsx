@@ -6,7 +6,6 @@ import { useOptimistic, useTransition } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { accept, request, withdraw } from "@/features/connect";
-import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 
 export type Action = "connect" | "withdraw" | "edit" | "accept" | "message";
@@ -76,7 +75,7 @@ export function SideBar({
         <div className="absolute inset-x-0 -bottom-5">
           {optimisticAction === "edit" && (
             <Link
-              href={routes.editProfile}
+              href="/profile/edit"
               className={buttonVariants({ variant: "outline" })}
             >
               Edit profile

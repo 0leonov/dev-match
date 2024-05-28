@@ -29,7 +29,6 @@ import {
   CompleteRegistrationSchema,
   completeRegistrationSchema,
 } from "@/entities/user/complete-registration-schema";
-import { routes } from "@/lib/routes";
 
 import { completeRegistration } from "./actions";
 
@@ -51,7 +50,7 @@ export function CompleteRegistrationForm() {
     startTransition(async () => {
       const result = await completeRegistration(data);
 
-      router.replace(searchParams.get("callbackUrl") ?? routes.home);
+      router.replace(searchParams.get("callbackUrl") ?? "/home");
 
       if (!result.success) {
         toast.error(result?.error);

@@ -1,12 +1,10 @@
-import { routes } from "@/lib/routes";
-
 export const footerContent = [
   {
     title: "Company",
     links: [
       {
         title: "About",
-        href: routes.about,
+        href: "/about",
       },
     ],
   },
@@ -15,11 +13,11 @@ export const footerContent = [
     links: [
       {
         title: "Terms of Service",
-        href: routes.terms,
+        href: "/terms",
       },
       {
         title: "Privacy Policy",
-        href: routes.terms,
+        href: "/terms",
       },
     ],
   },

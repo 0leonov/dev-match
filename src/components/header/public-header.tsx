@@ -4,7 +4,6 @@ import { auth } from "@/auth";
 import { GitHub } from "@/components/icons";
 import { buttonVariants } from "@/components/ui/button";
 import { ThemeToggle } from "@/features/theming";
-import { routes } from "@/lib/routes";
 
 import { HomeLink } from "./home-link";
 
@@ -14,7 +13,7 @@ export async function PublicHeader() {
   return (
     <header className="sticky top-0 z-20 py-4 backdrop-blur">
       <div className="container flex items-center justify-between">
-        <HomeLink href={session ? routes.home : routes.welcome} />
+        <HomeLink href={session ? "/home" : "/"} />
 
         <div className="flex gap-4">
           <Link

@@ -10,7 +10,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DropdownThemeToggle } from "@/features/theming";
-import { routes } from "@/lib/routes";
 
 import { HomeLink } from "./home-link";
 import { NavBar } from "./nav-bar";
@@ -26,7 +25,7 @@ export async function PrivateHeader() {
     <header className="sticky top-0 z-20 py-4 backdrop-blur">
       <div className="container grid grid-cols-2 sm:grid-cols-[1fr,_max-content,_1fr]">
         <div className="flex items-center">
-          <HomeLink href={routes.home} />
+          <HomeLink href="/home" />
         </div>
 
         <NavBar username={session.user.username!} className="hidden sm:block" />
@@ -74,7 +73,7 @@ export async function PrivateHeader() {
                 action={async () => {
                   "use server";
 
-                  await signOut({ redirectTo: routes.welcome });
+                  await signOut({ redirectTo: "/" });
                 }}
               >
                 <DropdownMenuItem asChild>
