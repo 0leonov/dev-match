@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, User } from "lucide-react";
+import { Bell, Search, User } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { NavBarLink } from "./nav-bar-link";
@@ -19,10 +19,10 @@ export function NavBar({
       <ul className="flex gap-4">
         <li>
           <NavBarLink
-            href={`/users/${username}`}
-            isActive={pathname.startsWith(`/users/${username}`)}
+            href={"/search"}
+            isActive={pathname.startsWith(`/notifications`)}
           >
-            <User />
+            <Search />
           </NavBarLink>
         </li>
 
@@ -32,6 +32,15 @@ export function NavBar({
             isActive={pathname.startsWith(`/notifications`)}
           >
             <Bell />
+          </NavBarLink>
+        </li>
+
+        <li>
+          <NavBarLink
+            href={`/users/${username}`}
+            isActive={pathname.startsWith(`/users/${username}`)}
+          >
+            <User />
           </NavBarLink>
         </li>
       </ul>
