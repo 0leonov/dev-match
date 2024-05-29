@@ -1,17 +1,28 @@
+import { Ellipsis, Flag, Trash2 } from "lucide-react";
 import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import type { Post } from "@/entities/post";
+import { deletePost } from "@/features/delete-post";
 import { cn, formatDateTime } from "@/lib/utils";
 
 export function PostCard({
+  id,
   content,
   createdAt,
   authorName,
   authorUsername,
   authorImage,
+  isAdmin,
   className,
-}: Post & { className?: string }) {
+}: Post & { isAdmin?: boolean; className?: string }) {
   return (
     <div
       className={cn(
@@ -30,21 +41,44 @@ export function PostCard({
       </Link>
 
       <div className="text-sm">
-        <h3 className="font-semibold">{authorName}</h3>
+        <div className="flex justify-between">
+          <Link href={`/users/${authorUsername}`} className="flex gap-2">
+            <h3 className="font-semibold">{authorName}</h3>
 
-        <Link
-          href={`/users/${authorUsername}`}
-          className="text-muted-foreground"
-        >
-          @{authorUsername}
-        </Link>
+            <h3 className="grow text-muted-foreground">@{authorUsername}</h3>
+          </Link>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Ellipsis className="size-5" />
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>
+                <Flag className="mr-2 size-4" />
+                <span>Report</span>
+              </DropdownMenuItem>
+
+              {isAdmin && (
+                <div>
+                  <DropdownMenuSeparator />
+
+                  <DropdownMenuItem onClick={() => deletePost(id)}>
+                    <Trash2 className="mr-2 size-4" />
+                    <span>Delete</span>
+                  </DropdownMenuItem>
+                </div>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        <p className="col-start-2 whitespace-break-spaces">{content}</p>
+
+        <span className="col-start-2 text-sm text-muted-foreground">
+          {formatDateTime(new Date(createdAt))}
+        </span>
       </div>
-
-      <p className="col-start-2 whitespace-break-spaces">{content}</p>
-
-      <span className="col-start-2 text-sm text-muted-foreground">
-        {formatDateTime(new Date(createdAt))}
-      </span>
     </div>
   );
 }

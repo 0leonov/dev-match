@@ -13,11 +13,13 @@ export function PostSection({
   authorName,
   authorUsername,
   authorImage,
+  isAdmin,
 }: {
   posts: Post[];
   authorName: string | null;
   authorUsername: string | null;
   authorImage: string | null;
+  isAdmin: boolean;
 }) {
   const [optimisticPosts, addOptimisticPost] = useOptimistic(
     posts,
@@ -48,7 +50,7 @@ export function PostSection({
     <>
       <CreatePostForm addPost={addPost} />
 
-      <PostList posts={optimisticPosts} className="mt-8" />
+      <PostList isAdmin={isAdmin} posts={optimisticPosts} className="mt-8" />
     </>
   );
 }
