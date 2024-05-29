@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq, ilike, isNotNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 import { db, users } from "@/db";
@@ -39,4 +39,13 @@ export async function updateUser(id: string, data: UpdateUserSchema) {
   await db.update(users).set(data).where(eq(users.id, id));
 
   revalidatePath(`/users/${parsedData.data.username}`);
+}
+
+export async function getUsers(username?: string) {
+  return await db
+    .select()
+    .from(users)
+    .where(
+      and(isNotNull(users.username), ilike(users.username, `%${username}%`)),
+    );
 }

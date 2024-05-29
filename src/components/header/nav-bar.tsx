@@ -20,7 +20,7 @@ export function NavBar({
         <li>
           <NavBarLink
             href={"/search"}
-            isActive={pathname.startsWith(`/notifications`)}
+            isActive={pathname.startsWith(`/search`)}
           >
             <Search />
           </NavBarLink>
