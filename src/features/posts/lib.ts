@@ -2,11 +2,12 @@ import { desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 import { db, posts, users } from "@/db";
-import { getUserById } from "@/entities/user";
+import { getUserById } from "@/features/user";
 
 import { type CreatePostSchema, createPostSchema } from "./create-post-schema";
+import type { Post } from "./types";
 
-export async function getPosts() {
+export async function getPosts(): Promise<Post[]> {
   return await db
     .select({
       id: posts.id,
@@ -21,7 +22,7 @@ export async function getPosts() {
     .orderBy(desc(posts.createdAt));
 }
 
-export async function getPostsByAuthor(authorId: string) {
+export async function getPostsByAuthor(authorId: string): Promise<Post[]> {
   return await db
     .select({
       id: posts.id,
@@ -48,7 +49,7 @@ export async function createPost(data: CreatePostSchema, authorId: string) {
 
   const author = await getUserById(authorId);
 
-  if (!author) {
+  if (!author?.username) {
     throw Error("Author not found");
   }
 
@@ -57,25 +58,11 @@ export async function createPost(data: CreatePostSchema, authorId: string) {
   revalidatePath("/home");
 }
 
-export async function deletePost(id: string, userId: string) {
+export async function deletePost(id: string) {
   const [post] = await db.select().from(posts).where(eq(posts.id, id)).limit(1);
 
   if (!post) {
     throw Error("Post not found");
-  }
-
-  const [user] = await db
-    .select({ id: users.id, roles: users.roles })
-    .from(users)
-    .where(eq(users.id, userId))
-    .limit(1);
-
-  if (!user) {
-    throw Error("User not found");
-  }
-
-  if (post.authorId !== user.id && !user.roles?.includes("admin")) {
-    throw Error("Forbidden");
   }
 
   await db.delete(posts).where(eq(posts.id, id));

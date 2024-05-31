@@ -3,7 +3,7 @@ import Link from "next/link";
 import { auth } from "@/auth";
 import { GitHub } from "@/components/icons";
 import { buttonVariants } from "@/components/ui/button";
-import { ThemeToggle } from "@/features/theming";
+import { ThemeToggle } from "@/features-1/theming";
 
 import { HomeLink } from "./home-link";
 

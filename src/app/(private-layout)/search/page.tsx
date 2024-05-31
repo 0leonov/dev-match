@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getUsers } from "@/entities/user";
+import { getUsers } from "@/features/user";
 
 import { Filters } from "./filters";
 

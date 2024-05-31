@@ -1,12 +1,12 @@
 "use server";
 
 import { auth } from "@/auth";
-import { createConnection } from "@/entities/connection";
+import { createConnection } from "@/features/connection";
 import {
   createConnectionRequest,
   deleteConnectionRequest,
   getConnectionRequests,
-} from "@/entities/connection-request";
+} from "@/features/connection-request";
 
 export async function request(targetId: string) {
   const session = await auth();

@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 
 import { auth } from "@/auth";
-import { PostList } from "@/components/post-list";
-import { getConnectionCount, isConnected } from "@/entities/connection";
-import { getConnectionRequest } from "@/entities/connection-request";
+import { PostList } from "@/features/posts/post-list";
+import { getConnectionCount, isConnected } from "@/features/connection";
+import { getConnectionRequest } from "@/features/connection-request";
 import { getPostsByAuthor } from "@/entities/post";
-import { getUserByUsername, getUserSkills } from "@/entities/user";
+import { getUserByUsername, getUserSkills } from "@/features/user";
 
 import { Action, SideBar } from "./side-bar";
 

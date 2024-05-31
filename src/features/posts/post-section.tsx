@@ -3,10 +3,11 @@
 import { useOptimistic } from "react";
 import { toast } from "sonner";
 
-import { PostList } from "@/components/post-list";
-import type { CreatePostSchema, Post } from "@/entities/post";
-import { CreatePostForm } from "@/features/create-post";
-import { createPost } from "@/features/create-post/actions";
+import { createPost } from "./actions";
+import { CreatePostForm } from "./create-post-form";
+import type { CreatePostSchema } from "./create-post-schema";
+import { PostList } from "./post-list";
+import type { Post } from "./types";
 
 export function PostSection({
   posts,

@@ -1,4 +1,4 @@
-import { EditUsernameForm } from "@/features/edit-profile";
+import { EditUsernameForm } from "@/features-1/edit-profile";
 
 export default function CompleteRegistration() {
   return (

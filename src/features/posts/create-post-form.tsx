@@ -12,10 +12,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  type CreatePostSchema,
-  createPostSchema,
-} from "@/entities/post/create-post-schema";
+
+import { type CreatePostSchema, createPostSchema } from "./create-post-schema";
 
 export function CreatePostForm({
   addPost,

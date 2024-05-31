@@ -29,7 +29,7 @@ import { Input } from "@/components/ui/input";
 import {
   type UpdateUserSchema,
   updateUserSchema,
-} from "@/entities/user/update-user-schema";
+} from "@/features/user/update-user-schema";
 import { useDebounce } from "@/lib/hooks";
 
 import { checkUsernameAvailability, editProfile } from "./actions";

@@ -1,4 +1,4 @@
-import { get } from "@/features/connect";
+import { get } from "@/features-1/connect";
 
 import { RequestList } from "./request-list";
 

@@ -5,7 +5,7 @@ import {
   getUserByUsername,
   updateUser,
   type UpdateUserSchema,
-} from "@/entities/user";
+} from "@/features/user";
 
 export async function editProfile(data: UpdateUserSchema) {
   const session = await auth();

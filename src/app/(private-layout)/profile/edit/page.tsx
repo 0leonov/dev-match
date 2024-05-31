@@ -1,11 +1,11 @@
 import { auth } from "@/auth";
-import { getAll } from "@/entities/skill";
-import { getUserSkills } from "@/entities/user";
+import { getAll } from "@/features/skill";
+import { getUserSkills } from "@/features/user";
 import {
   EditProfileForm,
   EditSkillsForm,
   EditUsernameForm,
-} from "@/features/edit-profile";
+} from "@/features-1/edit-profile";
 
 export default async function EditProfile() {
   const session = await auth();

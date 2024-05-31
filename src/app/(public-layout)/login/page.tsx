@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { GitHubSignInButton, GoogleSignInButton } from "@/features/sign-in";
+import { GitHubSignInButton, GoogleSignInButton } from "@/features-1/sign-in";
 
 export default function Login() {
   return (

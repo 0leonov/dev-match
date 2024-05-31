@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
-import type { Post } from "@/entities/post";
 
 import { PostCard } from "./post-card";
+import type { Post } from "./types";
 
 export function PostList({
   posts,

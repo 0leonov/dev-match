@@ -9,9 +9,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { Post } from "@/entities/post";
-import { deletePost } from "@/features/delete-post";
 import { cn, formatDateTime } from "@/lib/utils";
+
+import { deletePost } from "./actions";
+import type { Post } from "./types";
 
 export function PostCard({
   id,

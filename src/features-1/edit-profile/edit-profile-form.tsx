@@ -26,11 +26,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import type { Gender } from "@/entities/user";
+import type { Gender } from "@/features/user";
 import {
   type UpdateUserSchema,
   updateUserSchema,
-} from "@/entities/user/update-user-schema";
+} from "@/features/user/update-user-schema";
 
 import { editProfile } from "./actions";
 

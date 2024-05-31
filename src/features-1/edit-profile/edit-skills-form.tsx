@@ -34,7 +34,7 @@ import type { Skill } from "@/db";
 import {
   type UpdateUserSchema,
   updateUserSchema,
-} from "@/entities/user/update-user-schema";
+} from "@/features/user/update-user-schema";
 
 import { editProfile } from "./actions";
 

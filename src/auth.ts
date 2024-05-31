@@ -6,7 +6,7 @@ import Google from "next-auth/providers/google";
 
 import { db } from "@/db";
 
-import { getUserById } from "./entities/user";
+import { getUserById } from "./features/user";
 
 export const config = {
   adapter: DrizzleAdapter(db),

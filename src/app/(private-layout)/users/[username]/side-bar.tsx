@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import type { Skill } from "@/db";
-import { accept, request, withdraw } from "@/features/connect";
+import { accept, request, withdraw } from "@/features-1/connect";
 import { cn } from "@/lib/utils";
 
 export type Action = "connect" | "withdraw" | "edit" | "accept" | "message";
