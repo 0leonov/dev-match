@@ -1,11 +1,9 @@
 import { auth } from "@/auth";
-import { getAll } from "@/features/skill";
-import { getUserSkills } from "@/features/user";
-import {
-  EditProfileForm,
-  EditSkillsForm,
-  EditUsernameForm,
-} from "@/features-1/edit-profile";
+import { getSkills } from "@/features/skills/lib";
+import { EditProfileForm } from "@/features/users/edit-profile-form";
+import { EditSkillsForm } from "@/features/users/edit-skills-form";
+import { EditUsernameForm } from "@/features/users/edit-username-form";
+import { getUserSkills } from "@/features/users/lib";
 
 export default async function EditProfile() {
   const session = await auth();
@@ -14,7 +12,7 @@ export default async function EditProfile() {
     throw Error("Not authenticated");
   }
 
-  const skills = await getAll();
+  const skills = await getSkills();
 
   const defaultSkillIds = (await getUserSkills(session.user.id)).map(
     ({ id }) => id,

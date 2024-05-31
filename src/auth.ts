@@ -5,8 +5,7 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
 import { db } from "@/db";
-
-import { getUserById } from "./features/user";
+import { getUserById } from "@/features/users/lib";
 
 export const config = {
   adapter: DrizzleAdapter(db),

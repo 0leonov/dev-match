@@ -1,29 +1,31 @@
 import { useEffect, useRef } from "react";
 
-type Timer = ReturnType<typeof setTimeout>;
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useDebounce<T extends (...args: any[]) => void>(
-  func: T,
+  callback: T,
   delay = 500,
 ) {
-  const timer = useRef<Timer>();
+  const timer = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     return () => {
-      if (!timer.current) return;
+      if (!timer.current) {
+        return;
+      }
 
       clearTimeout(timer.current);
     };
   }, []);
 
-  const debouncedFunction = ((...args: Parameters<T>) => {
+  function debouncedFunction(...args: Parameters<T>) {
     const newTimer = setTimeout(() => {
-      func(...args);
+      callback(...args);
     }, delay);
+
     clearTimeout(timer.current);
+
     timer.current = newTimer;
-  }) as T;
+  }
 
   return debouncedFunction;
 }

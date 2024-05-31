@@ -1,9 +1,8 @@
 import { and, eq, ilike, isNotNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
-import { db, type Skill, skills, users, userSkills } from "@/db";
+import { db, type Skill, skills, type User, users, userSkills } from "@/db";
 
-import type { User } from "./types";
 import { type UpdateUserSchema, updateUserSchema } from "./update-user-schema";
 
 export async function getUserById(id: string): Promise<User | null> {

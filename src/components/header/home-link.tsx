@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-import { DevMatch } from "@/components/icons";
+import { DevMatch } from "@/components/icons/devmatch";
 
 const MotionLink = motion(Link);
 

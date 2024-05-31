@@ -1,12 +1,8 @@
 "use server";
 
 import { auth } from "@/auth";
-import { createConnection } from "@/features/connection";
-import {
-  createConnectionRequest,
-  deleteConnectionRequest,
-  getConnectionRequests,
-} from "@/features/connection-request";
+
+import * as lib from "./lib";
 
 export async function request(targetId: string) {
   const session = await auth();
@@ -15,7 +11,7 @@ export async function request(targetId: string) {
     throw new Error("Unauthorized");
   }
 
-  await createConnectionRequest(session.user.id, targetId);
+  await lib.createConnectionRequest(session.user.id, targetId);
 
   return { success: true };
 }
@@ -27,7 +23,7 @@ export async function withdraw(targetId: string) {
     throw new Error("Unauthorized");
   }
 
-  await deleteConnectionRequest(session.user.id, targetId);
+  await lib.deleteConnectionRequest(session.user.id, targetId);
 
   return { success: true };
 }
@@ -39,9 +35,9 @@ export async function accept(userId: string) {
     throw new Error("Unauthorized");
   }
 
-  await deleteConnectionRequest(userId, session.user.id);
+  await lib.deleteConnectionRequest(userId, session.user.id);
 
-  await createConnection(userId, session.user.id);
+  await lib.createConnection(userId, session.user.id);
 
   return { success: true };
 }
@@ -53,17 +49,17 @@ export async function decline(userId: string) {
     throw new Error("Unauthorized");
   }
 
-  await deleteConnectionRequest(userId, session.user.id);
+  await lib.deleteConnectionRequest(userId, session.user.id);
 
   return { success: true };
 }
 
-export async function get() {
+export async function getRequests() {
   const session = await auth();
 
   if (!session) {
     throw new Error("Unauthorized");
   }
 
-  return await getConnectionRequests(session.user.id);
+  return await lib.getConnectionRequests(session.user.id);
 }

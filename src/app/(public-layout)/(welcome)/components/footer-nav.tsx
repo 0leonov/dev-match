@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { footerContent } from "../lib";
+import { footerContent } from "../lib/footer-content";
 
 export function FooterNav() {
   return (

@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 
-import { GitHub } from "@/components/icons";
+import { GitHub } from "@/components/icons/github";
 import { Button } from "@/components/ui/button";
 
 export function GitHubSignInButton() {

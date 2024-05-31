@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 
-import { Google } from "@/components/icons";
+import { Google } from "@/components/icons/google";
 import { Button } from "@/components/ui/button";
 
 export function GoogleSignInButton() {

@@ -127,9 +127,22 @@ export const userSkills = pgTable(
 );
 
 export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
 
 export type Skill = typeof skills.$inferSelect;
-
-export type InsertSkill = typeof skills.$inferInsert;
+export type NewSkill = typeof skills.$inferInsert;
 
 export type UserSkill = typeof userSkills.$inferSelect;
+export type NewUserSkill = typeof userSkills.$inferInsert;
+
+export type Account = typeof accounts.$inferSelect;
+export type NewAccount = typeof accounts.$inferInsert;
+
+export type Post = typeof posts.$inferSelect;
+export type NewPost = typeof posts.$inferInsert;
+
+export type Connection = typeof connections.$inferSelect;
+export type NewConnection = typeof connections.$inferInsert;
+
+export type ConnectionRequest = typeof connectionRequests.$inferSelect;
+export type NewConnectionRequest = typeof connectionRequests.$inferInsert;

@@ -7,7 +7,8 @@ import { useOptimistic, useTransition } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { accept, decline } from "@/features-1/connect";
+
+import { accept, decline } from "./actions";
 
 interface Request {
   userId: string | null;

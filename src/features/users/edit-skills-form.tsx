@@ -31,12 +31,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import type { Skill } from "@/db";
-import {
-  type UpdateUserSchema,
-  updateUserSchema,
-} from "@/features/user/update-user-schema";
 
 import { editProfile } from "./actions";
+import { type UpdateUserSchema, updateUserSchema } from "./update-user-schema";
 
 export function EditSkillsForm({
   allSkills,

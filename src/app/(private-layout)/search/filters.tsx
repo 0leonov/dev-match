@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
-import { debounce } from "@/lib/utils";
+import { useDebounce } from "@/lib/hooks";
 
 export function Filters() {
   const searchParams = useSearchParams();
@@ -12,7 +12,7 @@ export function Filters() {
 
   const pathname = usePathname();
 
-  const onChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = useDebounce((event: React.ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set(event.target.name, event.target.value);
     router.push(pathname + "?" + params.toString());

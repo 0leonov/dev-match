@@ -1,9 +1,8 @@
-import { get } from "@/features-1/connect";
-
-import { RequestList } from "./request-list";
+import { getRequests } from "@/features/connections/actions";
+import { RequestList } from "@/features/connections/request-list";
 
 export default async function Notifications() {
-  const requests = await get();
+  const requests = await getRequests();
 
   return (
     <main className="container max-w-screen-sm py-8">

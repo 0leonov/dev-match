@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 import { auth } from "@/auth";
-import { GitHub } from "@/components/icons";
+import { GitHub } from "@/components/icons/github";
 import { buttonVariants } from "@/components/ui/button";
-import { ThemeToggle } from "@/features-1/theming";
+import { ThemeToggle } from "@/features/theming/theme-toggle";
 
 import { HomeLink } from "./home-link";
 

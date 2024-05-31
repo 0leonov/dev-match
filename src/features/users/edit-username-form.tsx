@@ -26,13 +26,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  type UpdateUserSchema,
-  updateUserSchema,
-} from "@/features/user/update-user-schema";
 import { useDebounce } from "@/lib/hooks";
 
 import { checkUsernameAvailability, editProfile } from "./actions";
+import { type UpdateUserSchema, updateUserSchema } from "./update-user-schema";
 
 export function EditUsernameForm({
   username,

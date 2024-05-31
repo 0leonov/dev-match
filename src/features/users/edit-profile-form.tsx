@@ -26,13 +26,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import type { Gender } from "@/features/user";
-import {
-  type UpdateUserSchema,
-  updateUserSchema,
-} from "@/features/user/update-user-schema";
 
 import { editProfile } from "./actions";
+import { type UpdateUserSchema, updateUserSchema } from "./update-user-schema";
 
 export function EditProfileForm({
   bio,
@@ -41,7 +37,7 @@ export function EditProfileForm({
   name,
 }: {
   bio: string | null;
-  gender: Gender | null;
+  gender: "not_specified" | "male" | "female" | null;
   birthdate: string | null;
   name: string | null;
 }) {

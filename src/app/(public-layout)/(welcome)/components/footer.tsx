@@ -1,4 +1,4 @@
-import { DevMatch } from "@/components/icons";
+import { DevMatch } from "@/components/icons/devmatch";
 
 export function Footer() {
   return (

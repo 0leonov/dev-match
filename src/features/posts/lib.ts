@@ -2,7 +2,7 @@ import { desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 import { db, posts, users } from "@/db";
-import { getUserById } from "@/features/user";
+import { getUserById } from "@/features/users/lib";
 
 import { type CreatePostSchema, createPostSchema } from "./create-post-schema";
 import type { Post } from "./types";

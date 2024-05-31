@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DropdownThemeToggle } from "@/features-1/theming";
+import { DropdownThemeToggle } from "@/features/theming/dropdown-theme-toggle";
 
 import { HomeLink } from "./home-link";
 import { NavBar } from "./nav-bar";

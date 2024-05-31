@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 
 import { auth } from "@/auth";
+import { getConnectionRequest } from "@/features/connections/lib";
+import { getConnectionCount, isConnected } from "@/features/connections/lib";
+import { getPostsByAuthor } from "@/features/posts/lib";
 import { PostList } from "@/features/posts/post-list";
-import { getConnectionCount, isConnected } from "@/features/connection";
-import { getConnectionRequest } from "@/features/connection-request";
-import { getPostsByAuthor } from "@/entities/post";
-import { getUserByUsername, getUserSkills } from "@/features/user";
+import { getUserByUsername, getUserSkills } from "@/features/users/lib";
 
-import { Action, SideBar } from "./side-bar";
+import { type Action, SideBar } from "./side-bar";
 
 export default async function Profile({
   params,
