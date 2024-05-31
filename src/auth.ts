@@ -5,7 +5,8 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
 import { db } from "@/db";
-import { getUserById } from "@/entities/user";
+
+import { getUserById } from "./entities/user";
 
 export const config = {
   adapter: DrizzleAdapter(db),
@@ -59,6 +60,10 @@ export const config = {
       }
 
       const user = await getUserById(token.sub);
+
+      if (!user) {
+        return session;
+      }
 
       session.user = user;
 

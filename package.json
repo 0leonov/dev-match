@@ -11,7 +11,8 @@
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "db:drop": "drizzle-kit drop"
+    "db:drop": "drizzle-kit drop",
+    "db:seed": "node -r esbuild-register ./src/db/seed.ts"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.0.0",

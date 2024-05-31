@@ -5,7 +5,7 @@ import { PostList } from "@/components/post-list";
 import { getConnectionCount, isConnected } from "@/entities/connection";
 import { getConnectionRequest } from "@/entities/connection-request";
 import { getPostsByAuthor } from "@/entities/post";
-import { getUserByUsername } from "@/entities/user";
+import { getUserByUsername, getUserSkills } from "@/entities/user";
 
 import { Action, SideBar } from "./side-bar";
 
@@ -44,6 +44,8 @@ export default async function Profile({
 
   const connectionCount = await getConnectionCount(user.id);
 
+  const skills = await getUserSkills(user.id);
+
   return (
     <main className="container grid gap-8 py-8 sm:grid-cols-[16rem,_1fr] lg:grid-cols-[16rem,_1fr,_16rem]">
       <SideBar
@@ -55,6 +57,7 @@ export default async function Profile({
         image={user.image!}
         bio={user.bio!}
         connectionCount={connectionCount}
+        skills={skills}
       />
 
       <PostList

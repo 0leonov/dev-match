@@ -23,7 +23,7 @@ export const updateUserSchema = z.object({
     .optional(),
   gender: z.enum(["not_specified", "male", "female"]).optional(),
   name: z.string().max(32).optional(),
-  registrationCompleted: z.date().optional(),
+  skills: z.array(z.string()).optional(),
 });
 
 export type UpdateUserSchema = z.infer<typeof updateUserSchema>;

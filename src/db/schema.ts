@@ -102,4 +102,34 @@ export const connectionRequests = pgTable(
   }),
 );
 
+export const skills = pgTable("skill", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => randomUUID()),
+  name: text("name").unique(),
+});
+
+export const userSkills = pgTable(
+  "user_skill",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    skillId: text("skillId")
+      .notNull()
+      .references(() => skills.id, { onDelete: "cascade" }),
+  },
+  (userSkill) => ({
+    compoundKey: primaryKey({
+      columns: [userSkill.userId, userSkill.skillId],
+    }),
+  }),
+);
+
 export type User = typeof users.$inferSelect;
+
+export type Skill = typeof skills.$inferSelect;
+
+export type InsertSkill = typeof skills.$inferInsert;
+
+export type UserSkill = typeof userSkills.$inferSelect;

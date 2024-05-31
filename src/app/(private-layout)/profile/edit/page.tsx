@@ -1,5 +1,11 @@
 import { auth } from "@/auth";
-import { EditProfileForm } from "@/features/edit-profile";
+import { getAll } from "@/entities/skill";
+import { getUserSkills } from "@/entities/user";
+import {
+  EditProfileForm,
+  EditSkillsForm,
+  EditUsernameForm,
+} from "@/features/edit-profile";
 
 export default async function EditProfile() {
   const session = await auth();
@@ -8,9 +14,24 @@ export default async function EditProfile() {
     throw Error("Not authenticated");
   }
 
+  const skills = await getAll();
+
+  const defaultSkillIds = (await getUserSkills(session.user.id)).map(
+    ({ id }) => id,
+  );
+
   return (
-    <main className="container max-w-screen-sm py-8">
-      <EditProfileForm session={session} />
+    <main className="container max-w-screen-sm space-y-8 py-8">
+      <EditUsernameForm action="Save" username={session.user.username} />
+
+      <EditSkillsForm allSkills={skills} defaultSkillIds={defaultSkillIds} />
+
+      <EditProfileForm
+        bio={session.user.bio}
+        gender={session.user.gender}
+        birthdate={session.user.birthdate}
+        name={session.user.name}
+      />
     </main>
   );
 }

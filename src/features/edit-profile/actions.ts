@@ -1,7 +1,11 @@
 "use server";
 
 import { auth, unstable_update } from "@/auth";
-import { updateUser, UpdateUserSchema } from "@/entities/user";
+import {
+  getUserByUsername,
+  updateUser,
+  type UpdateUserSchema,
+} from "@/entities/user";
 
 export async function editProfile(data: UpdateUserSchema) {
   const session = await auth();
@@ -22,4 +26,20 @@ export async function editProfile(data: UpdateUserSchema) {
   await unstable_update(session);
 
   return { success: true };
+}
+
+export async function checkUsernameAvailability(username: string) {
+  const session = await auth();
+
+  if (!session) {
+    throw Error("Not authenticated");
+  }
+
+  if (session.user.username === username) {
+    return true;
+  }
+
+  const user = await getUserByUsername(username);
+
+  return !user;
 }

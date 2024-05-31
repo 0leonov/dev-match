@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useOptimistic, useTransition } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
+import type { Skill } from "@/db";
 import { accept, request, withdraw } from "@/features/connect";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +20,7 @@ export function SideBar({
   username,
   name,
   bio,
+  skills,
   className,
 }: {
   id: string;
@@ -27,6 +30,7 @@ export function SideBar({
   image?: string;
   name?: string;
   bio?: string;
+  skills?: Skill[];
   className?: string;
 }) {
   const [optimisticAction, toggleOptimisticAction] = useOptimistic(
@@ -69,6 +73,14 @@ export function SideBar({
         <h2 className="mt-8 text-2xl font-bold text-card-foreground">{name}</h2>
 
         <h1 className="text-lg text-muted-foreground">@{username}</h1>
+
+        <ul className="mt-2 flex flex-wrap justify-center gap-1">
+          {skills?.map(({ id, name }) => (
+            <li key={id}>
+              <Badge>{name}</Badge>
+            </li>
+          ))}
+        </ul>
 
         <p className="mt-2 text-sm text-muted-foreground">{bio}</p>
 

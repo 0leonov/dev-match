@@ -24,6 +24,7 @@ export async function getPosts() {
 export async function getPostsByAuthor(authorId: string) {
   return await db
     .select({
+      id: posts.id,
       content: posts.content,
       createdAt: posts.createdAt,
       authorName: users.name,
@@ -46,6 +47,10 @@ export async function createPost(data: CreatePostSchema, authorId: string) {
   await db.insert(posts).values({ authorId, ...parsedData.data });
 
   const author = await getUserById(authorId);
+
+  if (!author) {
+    throw Error("Author not found");
+  }
 
   revalidatePath(`/users/${author.username}`);
 

@@ -2,19 +2,12 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { Session } from "next-auth";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -33,24 +26,34 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import type { Gender } from "@/entities/user";
 import {
-  UpdateUserSchema,
+  type UpdateUserSchema,
   updateUserSchema,
 } from "@/entities/user/update-user-schema";
 
 import { editProfile } from "./actions";
 
-export function EditProfileForm({ session }: { session: Session }) {
+export function EditProfileForm({
+  bio,
+  gender,
+  birthdate,
+  name,
+}: {
+  bio: string | null;
+  gender: Gender | null;
+  birthdate: string | null;
+  name: string | null;
+}) {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<UpdateUserSchema>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
-      username: session.user.username ?? "",
-      bio: session.user.bio ?? "",
-      gender: session.user.gender ?? "not_specified",
-      birthdate: session.user.birthdate?.split("T")[0],
-      name: session.user.name ?? "",
+      name: name ?? "",
+      bio: bio ?? "",
+      gender: gender ?? "not_specified",
+      birthdate: birthdate ?? "",
     },
   });
 
@@ -58,12 +61,11 @@ export function EditProfileForm({ session }: { session: Session }) {
     startTransition(async () => {
       const result = await editProfile(data);
 
-      if (!result.success) {
-        toast.error(result.error);
+      if (result.success) {
         return;
       }
 
-      toast.success("Profile updated successfully");
+      toast.error(result.error);
     });
   }
 
@@ -71,11 +73,7 @@ export function EditProfileForm({ session }: { session: Session }) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card>
-          <CardHeader>
-            <CardTitle>Edit your profile</CardTitle>
-          </CardHeader>
-
-          <CardContent className="space-y-4">
+          <CardContent className="mt-4 space-y-4">
             <FormField
               control={form.control}
               name="name"
@@ -89,26 +87,6 @@ export function EditProfileForm({ session }: { session: Session }) {
 
                   <FormDescription>
                     This is your public display name
-                  </FormDescription>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-
-                  <FormControl>
-                    <Input placeholder="username" {...field} />
-                  </FormControl>
-
-                  <FormDescription>
-                    This is name to identify you on the platform
                   </FormDescription>
 
                   <FormMessage />
@@ -200,7 +178,7 @@ export function EditProfileForm({ session }: { session: Session }) {
             <Button variant="secondary" disabled={isPending} className="w-full">
               {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
 
-              <span>Save changes</span>
+              <span>Save</span>
             </Button>
           </CardFooter>
         </Card>
