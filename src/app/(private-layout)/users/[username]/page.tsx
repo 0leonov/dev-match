@@ -63,6 +63,7 @@ export default async function Profile({
       <PostList
         posts={posts}
         className="mx-auto w-full max-w-screen-sm sm:col-start-2"
+        session={session}
       />
     </main>
   );
