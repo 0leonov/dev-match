@@ -2,18 +2,15 @@ import type { Session } from "next-auth";
 
 import { Separator } from "@/components/ui/separator";
 
-import { deletePost } from "./actions";
 import { PostCard } from "./post-card";
 import type { Post } from "./types";
 
 export function PostList({
   posts,
-  handleDelete = deletePost,
   session,
   className,
 }: {
   posts: Post[];
-  handleDelete?: (id: string) => void;
   session: Session;
   className?: string;
 }) {
@@ -24,7 +21,6 @@ export function PostList({
           {index > 0 && <Separator className="my-6" />}
 
           <PostCard
-            handleDelete={handleDelete}
             isEditable={
               !!session.user.roles?.includes("admin") ||
               session.user.username === props.authorUsername

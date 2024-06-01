@@ -1,13 +1,15 @@
 "use client";
 
 import type { Session } from "next-auth";
-import { useOptimistic } from "react";
+import { useOptimistic, useTransition } from "react";
 import { toast } from "sonner";
+
+import { Separator } from "@/components/ui/separator";
 
 import * as actions from "./actions";
 import { CreatePostForm } from "./create-post-form";
 import type { CreatePostSchema } from "./create-post-schema";
-import { PostList } from "./post-list";
+import { PostCard } from "./post-card";
 import type { Post } from "./types";
 
 export function PostSection({
@@ -23,6 +25,8 @@ export function PostSection({
   authorImage: string | null;
   session: Session;
 }) {
+  const [, startTransition] = useTransition();
+
   const [optimisticPosts, updateOptimisticPost] = useOptimistic(
     posts,
     (
@@ -49,32 +53,47 @@ export function PostSection({
     },
   );
 
-  async function createPost(data: CreatePostSchema) {
-    updateOptimisticPost({ action: "add", data });
+  function createPost(data: CreatePostSchema) {
+    startTransition(async () => {
+      updateOptimisticPost({ action: "add", data });
 
-    const result = await actions.createPost(data);
+      const result = await actions.createPost(data);
 
-    if (!result.success) {
-      toast.error(result.error);
-    }
+      if (!result.success) {
+        toast.error(result.error);
+      }
+    });
   }
 
-  async function deletePost(id: string) {
-    updateOptimisticPost({ action: "delete", id });
+  function deletePost(id: string) {
+    startTransition(async () => {
+      updateOptimisticPost({ action: "delete", id });
 
-    await actions.deletePost(id);
+      await actions.deletePost(id);
+    });
   }
 
   return (
     <>
       <CreatePostForm addPost={createPost} />
 
-      <PostList
-        posts={optimisticPosts}
-        className="mt-8"
-        handleDelete={deletePost}
-        session={session}
-      />
+      <section className="mt-8">
+        {optimisticPosts.map((props, index) => (
+          <div key={crypto.randomUUID()}>
+            {index > 0 && <Separator className="my-6" />}
+
+            <PostCard
+              handleDelete={deletePost}
+              isEditable={
+                !!session.user.roles?.includes("admin") ||
+                session.user.username === props.authorUsername
+              }
+              className="px-2"
+              {...props}
+            />
+          </div>
+        ))}
+      </section>
     </>
   );
 }
