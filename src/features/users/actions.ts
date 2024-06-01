@@ -2,7 +2,7 @@
 
 import { auth, unstable_update } from "@/auth";
 
-import { getUserByUsername, updateUser } from "./lib";
+import { getUserByUsername, getUsers, updateUser } from "./lib";
 import { type UpdateUserSchema } from "./update-user-schema";
 
 export async function editProfile(data: UpdateUserSchema) {
@@ -40,4 +40,14 @@ export async function checkUsernameAvailability(username: string) {
   const user = await getUserByUsername(username);
 
   return !user;
+}
+
+export async function searchUsers({
+  username,
+  skillId,
+}: {
+  username?: string;
+  skillId?: string;
+}) {
+  return await getUsers({ username, skillId });
 }

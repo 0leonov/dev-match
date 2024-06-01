@@ -54,13 +54,29 @@ export async function updateUser(id: string, data: UpdateUserSchema) {
   revalidatePath(`/users/${parsedData.data.username}`);
 }
 
-export async function getUsers(username?: string): Promise<User[]> {
-  return await db
-    .select()
+export async function getUsers({
+  username,
+  skillId,
+}: {
+  username?: string;
+  skillId?: string;
+}): Promise<User[]> {
+  const result = await db
+    .select({ users })
     .from(users)
     .where(
-      and(isNotNull(users.username), ilike(users.username, `%${username}%`)),
-    );
+      and(
+        and(
+          isNotNull(users.username),
+          username ? ilike(users.username, `%${username}%`) : undefined,
+        ),
+        skillId ? eq(userSkills.skillId, skillId) : undefined,
+      ),
+    )
+    .leftJoin(userSkills, eq(users.id, userSkills.userId))
+    .groupBy(users.id);
+
+  return result.map(({ users }) => users);
 }
 
 export async function getUserSkills(id: string): Promise<Skill[]> {
