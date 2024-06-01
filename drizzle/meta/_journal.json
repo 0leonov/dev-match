@@ -22,6 +22,34 @@
       "when": 1714846320965,
       "tag": "0002_damp_wilson_fisk",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1715249623022,
+      "tag": "0003_windy_viper",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1716624494074,
+      "tag": "0004_careless_korvac",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1716807336635,
+      "tag": "0005_sharp_madame_hydra",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1716998088562,
+      "tag": "0006_brief_carmella_unuscione",
+      "breakpoints": true
     }
   ]
 }

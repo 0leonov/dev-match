@@ -8,8 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { GitHubSignInButton, GoogleSignInButton } from "@/features/sign-in";
-import { routes } from "@/lib/routes";
+import { GitHubSignInButton } from "@/features/sign-in/github-login-button";
+import { GoogleSignInButton } from "@/features/sign-in/google-login-button";
 
 export default function Login() {
   return (
@@ -33,14 +33,14 @@ export default function Login() {
           <p className="w-full text-center text-sm text-muted-foreground">
             By continuing you agree to our{" "}
             <Link
-              href={routes.terms}
+              href="/terms"
               className="font-medium underline-offset-4 hover:underline"
             >
               Terms of Service
             </Link>{" "}
             and{" "}
             <Link
-              href={routes.terms}
+              href="/terms"
               className="font-medium underline-offset-4 hover:underline"
             >
               Privacy Policy

@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
-import { routes } from "@/lib/routes";
 
 export default function NotFound() {
   return (
@@ -15,7 +14,7 @@ export default function NotFound() {
       </p>
 
       <Link
-        href={routes.home}
+        href="/home"
         className={buttonVariants({ variant: "link", size: "lg" })}
       >
         Go back

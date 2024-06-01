@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
-import { getPosts } from "@/entities/post";
-
-import PostSection from "./post-section";
+import { getPosts } from "@/features/posts/lib";
+import { PostSection } from "@/features/posts/post-section";
 
 export default async function Home() {
   const session = await auth();
@@ -19,6 +18,7 @@ export default async function Home() {
         authorName={session.user.name}
         authorUsername={session.user.username}
         authorImage={session.user.image}
+        session={session}
       />
     </main>
   );

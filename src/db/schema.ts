@@ -29,11 +29,7 @@ export const users = pgTable("user", {
   roles: roleEnum("roles")
     .array()
     .default(sql`ARRAY['user']::role[]`),
-  registrationCompleted: timestamp("registrationCompleted", { mode: "date" }),
 });
-
-export type User = typeof users.$inferSelect;
-export type NewUser = typeof users.$inferInsert;
 
 export const accounts = pgTable(
   "account",
@@ -63,12 +59,90 @@ export const posts = pgTable("post", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  authorId: text("userId")
+  authorId: text("authorId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   content: text("content"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
 });
 
+export const connections = pgTable(
+  "connection",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    connectedUserId: text("connectedUserId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (connection) => ({
+    compoundKey: primaryKey({
+      columns: [connection.userId, connection.connectedUserId],
+    }),
+  }),
+);
+
+export const connectionRequests = pgTable(
+  "connection_request",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    targetId: text("targetId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (connectionRequest) => ({
+    compoundKey: primaryKey({
+      columns: [connectionRequest.userId, connectionRequest.targetId],
+    }),
+  }),
+);
+
+export const skills = pgTable("skill", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => randomUUID()),
+  name: text("name").unique(),
+});
+
+export const userSkills = pgTable(
+  "user_skill",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    skillId: text("skillId")
+      .notNull()
+      .references(() => skills.id, { onDelete: "cascade" }),
+  },
+  (userSkill) => ({
+    compoundKey: primaryKey({
+      columns: [userSkill.userId, userSkill.skillId],
+    }),
+  }),
+);
+
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
+
+export type Skill = typeof skills.$inferSelect;
+export type NewSkill = typeof skills.$inferInsert;
+
+export type UserSkill = typeof userSkills.$inferSelect;
+export type NewUserSkill = typeof userSkills.$inferInsert;
+
+export type Account = typeof accounts.$inferSelect;
+export type NewAccount = typeof accounts.$inferInsert;
+
 export type Post = typeof posts.$inferSelect;
 export type NewPost = typeof posts.$inferInsert;
+
+export type Connection = typeof connections.$inferSelect;
+export type NewConnection = typeof connections.$inferInsert;
+
+export type ConnectionRequest = typeof connectionRequests.$inferSelect;
+export type NewConnectionRequest = typeof connectionRequests.$inferInsert;

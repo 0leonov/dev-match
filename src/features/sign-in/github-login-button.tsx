@@ -5,9 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 
-import { GitHub } from "@/components/icons";
+import { GitHub } from "@/components/icons/github";
 import { Button } from "@/components/ui/button";
-import { routes } from "@/lib/routes";
 
 export function GitHubSignInButton() {
   const [isPending, setIsPending] = useState(false);
@@ -17,7 +16,7 @@ export function GitHubSignInButton() {
   async function handleSignIn() {
     setIsPending(true);
 
-    const callbackUrl = searchParams.get("callbackUrl") ?? routes.home;
+    const callbackUrl = searchParams.get("callbackUrl") ?? "/home";
 
     await signIn("github", { callbackUrl });
   }

@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 
-import { appearanceAnimationVariants, featureSectionCards } from "../lib";
+import { appearanceAnimationVariants } from "../lib/appearance-animation-variants";
+import { featureSectionCards } from "../lib/feature-section-cards";
 
 export function FeatureSection() {
   return (

@@ -1,4 +1,4 @@
-import { AlignJustify, LogOut, User } from "lucide-react";
+import { AlignJustify, Bell, LogOut, Search, User } from "lucide-react";
 import Link from "next/link";
 
 import { auth, signOut } from "@/auth";
@@ -9,8 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DropdownThemeToggle } from "@/features/theming";
-import { routes } from "@/lib/routes";
+import { DropdownThemeToggle } from "@/features/theming/dropdown-theme-toggle";
 
 import { HomeLink } from "./home-link";
 import { NavBar } from "./nav-bar";
@@ -26,7 +25,7 @@ export async function PrivateHeader() {
     <header className="sticky top-0 z-20 py-4 backdrop-blur">
       <div className="container grid grid-cols-2 sm:grid-cols-[1fr,_max-content,_1fr]">
         <div className="flex items-center">
-          <HomeLink href={routes.home} />
+          <HomeLink href="/home" />
         </div>
 
         <NavBar username={session.user.username!} className="hidden sm:block" />
@@ -39,6 +38,22 @@ export async function PrivateHeader() {
 
             <DropdownMenuContent align="end">
               <div className="sm:hidden">
+                <DropdownMenuItem asChild>
+                  <Link href={`/search`}>
+                    <Search className="mr-2 size-4" />
+
+                    <span>Search</span>
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem asChild>
+                  <Link href={`/notification`}>
+                    <Bell className="mr-2 size-4" />
+
+                    <span>Notification</span>
+                  </Link>
+                </DropdownMenuItem>
+
                 <DropdownMenuItem asChild>
                   <Link href={`/users/${session.user.username}`}>
                     <User className="mr-2 size-4" />
@@ -58,7 +73,7 @@ export async function PrivateHeader() {
                 action={async () => {
                   "use server";
 
-                  await signOut({ redirectTo: routes.welcome });
+                  await signOut({ redirectTo: "/" });
                 }}
               >
                 <DropdownMenuItem asChild>

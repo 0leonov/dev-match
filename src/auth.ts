@@ -5,8 +5,7 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
 import { db } from "@/db";
-import { getUserById } from "@/entities/user";
-import { publicRoutes, routes } from "@/lib/routes";
+import { getUserById } from "@/features/users/lib";
 
 export const config = {
   adapter: DrizzleAdapter(db),
@@ -15,17 +14,17 @@ export const config = {
     strategy: "jwt",
   },
   pages: {
-    signIn: routes.signIn,
+    signIn: "/login",
   },
   callbacks: {
     authorized({ request, auth }) {
-      if (publicRoutes.includes(request.nextUrl.pathname)) {
+      if (["/", "/about", "/terms"].includes(request.nextUrl.pathname)) {
         return true;
       }
 
-      if (request.nextUrl.pathname.startsWith(routes.signIn)) {
+      if (request.nextUrl.pathname.startsWith("/login")) {
         return auth
-          ? NextResponse.redirect(new URL(routes.home, request.nextUrl))
+          ? NextResponse.redirect(new URL("/home", request.nextUrl))
           : true;
       }
 
@@ -33,20 +32,23 @@ export const config = {
         return false;
       }
 
-      const isCompleteRegistrationRoute =
-        request.nextUrl.pathname === routes.completeRegistration;
-
-      if (!auth.user.registrationCompleted && !isCompleteRegistrationRoute) {
+      if (
+        !auth.user.username &&
+        request.nextUrl.pathname !== "/complete-registration"
+      ) {
         return NextResponse.redirect(
           new URL(
-            `${routes.completeRegistration}?callbackUrl=${encodeURIComponent(request.url)}`,
+            `/complete-registration?callbackUrl=${encodeURIComponent(request.url)}`,
             request.nextUrl,
           ),
         );
       }
 
-      if (isCompleteRegistrationRoute && auth.user.registrationCompleted) {
-        return NextResponse.redirect(new URL(routes.home, request.nextUrl));
+      if (
+        request.nextUrl.pathname === "/complete-registration" &&
+        auth.user.username
+      ) {
+        return NextResponse.redirect(new URL("/home", request.nextUrl));
       }
 
       return true;
@@ -57,6 +59,10 @@ export const config = {
       }
 
       const user = await getUserById(token.sub);
+
+      if (!user) {
+        return session;
+      }
 
       session.user = user;
 

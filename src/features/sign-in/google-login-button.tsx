@@ -5,9 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 
-import { Google } from "@/components/icons";
+import { Google } from "@/components/icons/google";
 import { Button } from "@/components/ui/button";
-import { routes } from "@/lib/routes";
 
 export function GoogleSignInButton() {
   const [isPending, setIsPending] = useState(false);
@@ -17,7 +16,7 @@ export function GoogleSignInButton() {
   async function handleSignIn() {
     setIsPending(true);
 
-    const callbackUrl = searchParams.get("callbackUrl") ?? routes.home;
+    const callbackUrl = searchParams.get("callbackUrl") ?? "/home";
 
     await signIn("google", { callbackUrl });
   }

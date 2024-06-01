@@ -4,10 +4,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
-import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 
-import { appearanceAnimationVariants } from "../lib";
+import { appearanceAnimationVariants } from "../lib/appearance-animation-variants";
 
 const MotionLink = motion(Link);
 
@@ -40,7 +39,7 @@ export function HeroSection() {
         variants={appearanceAnimationVariants}
         custom={2}
         className={cn(buttonVariants({ size: "lg" }), "mt-8")}
-        href={routes.signIn}
+        href="/login"
       >
         Join us
       </MotionLink>
