@@ -1,7 +1,7 @@
 "use client";
 
 import type { Session } from "next-auth";
-import { useOptimistic } from "react";
+import { useOptimistic, useTransition } from "react";
 import { toast } from "sonner";
 
 import * as actions from "./actions";
@@ -23,6 +23,8 @@ export function PostSection({
   authorImage: string | null;
   session: Session;
 }) {
+  const [, startTransition] = useTransition();
+
   const [optimisticPosts, updateOptimisticPost] = useOptimistic(
     posts,
     (
@@ -49,20 +51,24 @@ export function PostSection({
     },
   );
 
-  async function createPost(data: CreatePostSchema) {
-    updateOptimisticPost({ action: "add", data });
+  function createPost(data: CreatePostSchema) {
+    startTransition(async () => {
+      updateOptimisticPost({ action: "add", data });
 
-    const result = await actions.createPost(data);
+      const result = await actions.createPost(data);
 
-    if (!result.success) {
-      toast.error(result.error);
-    }
+      if (!result.success) {
+        toast.error(result.error);
+      }
+    });
   }
 
-  async function deletePost(id: string) {
-    updateOptimisticPost({ action: "delete", id });
+  function deletePost(id: string) {
+    startTransition(async () => {
+      updateOptimisticPost({ action: "delete", id });
 
-    await actions.deletePost(id);
+      await actions.deletePost(id);
+    });
   }
 
   return (
