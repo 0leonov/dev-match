@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -98,7 +98,7 @@ export function EditSkillsForm({
                         <Button
                           variant="outline"
                           role="combobox"
-                          className="h-fit"
+                          className="h-fit min-h-10"
                         >
                           <ul className="flex flex-wrap gap-2">
                             {field.value?.map((id) => (
@@ -112,8 +112,6 @@ export function EditSkillsForm({
                               </li>
                             ))}
                           </ul>
-
-                          <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>

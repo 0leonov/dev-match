@@ -1,15 +1,20 @@
+import type { Session } from "next-auth";
+
 import { Separator } from "@/components/ui/separator";
 
+import { deletePost } from "./actions";
 import { PostCard } from "./post-card";
 import type { Post } from "./types";
 
 export function PostList({
   posts,
-  isAdmin,
+  handleDelete = deletePost,
+  session,
   className,
 }: {
   posts: Post[];
-  isAdmin?: boolean;
+  handleDelete?: (id: string) => void;
+  session: Session;
   className?: string;
 }) {
   return (
@@ -18,7 +23,15 @@ export function PostList({
         <div key={crypto.randomUUID()}>
           {index > 0 && <Separator className="my-6" />}
 
-          <PostCard isAdmin={isAdmin} className="px-2" {...props} />
+          <PostCard
+            handleDelete={handleDelete}
+            isEditable={
+              !!session.user.roles?.includes("admin") ||
+              session.user.username === props.authorUsername
+            }
+            className="px-2"
+            {...props}
+          />
         </div>
       ))}
     </section>

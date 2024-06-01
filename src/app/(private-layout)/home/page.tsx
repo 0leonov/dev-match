@@ -18,7 +18,7 @@ export default async function Home() {
         authorName={session.user.name}
         authorUsername={session.user.username}
         authorImage={session.user.image}
-        isAdmin={session.user.roles?.includes("admin") ?? false}
+        session={session}
       />
     </main>
   );

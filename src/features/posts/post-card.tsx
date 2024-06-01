@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn, formatDateTime } from "@/lib/utils";
 
-import { deletePost } from "./actions";
 import type { Post } from "./types";
 
 export function PostCard({
@@ -21,9 +20,14 @@ export function PostCard({
   authorName,
   authorUsername,
   authorImage,
-  isAdmin,
+  isEditable,
   className,
-}: Post & { isAdmin?: boolean; className?: string }) {
+  handleDelete,
+}: Post & {
+  isEditable?: boolean;
+  className?: string;
+  handleDelete: (id: string) => void;
+}) {
   return (
     <div
       className={cn(
@@ -60,11 +64,11 @@ export function PostCard({
                 <span>Report</span>
               </DropdownMenuItem>
 
-              {isAdmin && (
+              {isEditable && (
                 <div>
                   <DropdownMenuSeparator />
 
-                  <DropdownMenuItem onClick={() => deletePost(id)}>
+                  <DropdownMenuItem onClick={() => handleDelete(id)}>
                     <Trash2 className="mr-2 size-4" />
                     <span>Delete</span>
                   </DropdownMenuItem>

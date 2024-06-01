@@ -71,5 +71,7 @@ export async function getUserSkills(id: string): Promise<Skill[]> {
     .leftJoin(userSkills, eq(users.id, userSkills.userId))
     .leftJoin(skills, eq(userSkills.skillId, skills.id));
 
-  return result.map(({ name, id }) => ({ id: id ?? "", name }));
+  return result
+    .filter(({ id }) => id)
+    .map(({ id, name }) => ({ id: id!, name }));
 }
