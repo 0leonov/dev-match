@@ -2,13 +2,12 @@ import type { Session } from "next-auth";
 
 import { Separator } from "@/components/ui/separator";
 
-import { deletePost } from "./actions";
 import { PostCard } from "./post-card";
 import type { Post } from "./types";
 
 export function PostList({
   posts,
-  handleDelete = deletePost,
+  handleDelete,
   session,
   className,
 }: {

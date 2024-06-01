@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn, formatDateTime } from "@/lib/utils";
 
+import { deletePost } from "./actions";
 import type { Post } from "./types";
 
 export function PostCard({
@@ -26,7 +27,7 @@ export function PostCard({
 }: Post & {
   isEditable?: boolean;
   className?: string;
-  handleDelete: (id: string) => void;
+  handleDelete?: (id: string) => void;
 }) {
   return (
     <div
@@ -68,7 +69,11 @@ export function PostCard({
                 <div>
                   <DropdownMenuSeparator />
 
-                  <DropdownMenuItem onClick={() => handleDelete(id)}>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      handleDelete ? handleDelete(id) : deletePost(id)
+                    }
+                  >
                     <Trash2 className="mr-2 size-4" />
                     <span>Delete</span>
                   </DropdownMenuItem>
