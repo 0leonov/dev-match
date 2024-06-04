@@ -33,8 +33,15 @@ export const config = {
       }
 
       if (
+        !auth.user.roles?.includes("admin") &&
+        ["/edit-skills"].includes(request.nextUrl.pathname)
+      ) {
+        return NextResponse.redirect(new URL("/home", request.nextUrl));
+      }
+
+      if (
         !auth.user.username &&
-        request.nextUrl.pathname !== "/complete-registration"
+        !request.nextUrl.pathname.startsWith("/complete-registration")
       ) {
         return NextResponse.redirect(
           new URL(
@@ -45,8 +52,8 @@ export const config = {
       }
 
       if (
-        request.nextUrl.pathname === "/complete-registration" &&
-        auth.user.username
+        auth.user.username &&
+        request.nextUrl.pathname.startsWith("/complete-registration")
       ) {
         return NextResponse.redirect(new URL("/home", request.nextUrl));
       }
@@ -71,4 +78,5 @@ export const config = {
   },
 } satisfies NextAuthConfig;
 
-export const { handlers, auth, signIn, signOut } = NextAuth(config);
+export const { handlers, auth, signIn, signOut, unstable_update } =
+  NextAuth(config);
