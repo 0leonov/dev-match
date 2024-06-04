@@ -32,6 +32,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - Next.js
 - PostgreSQL 16
 - Drizzle ORM
+- Tailwind CSS
 
 ## License
 
