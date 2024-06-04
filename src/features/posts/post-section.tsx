@@ -4,10 +4,12 @@ import type { Session } from "next-auth";
 import { useOptimistic, useTransition } from "react";
 import { toast } from "sonner";
 
+import { Separator } from "@/components/ui/separator";
+
 import * as actions from "./actions";
 import { CreatePostForm } from "./create-post-form";
 import type { CreatePostSchema } from "./create-post-schema";
-import { PostList } from "./post-list";
+import { PostCard } from "./post-card";
 import type { Post } from "./types";
 
 export function PostSection({
@@ -75,12 +77,23 @@ export function PostSection({
     <>
       <CreatePostForm addPost={createPost} />
 
-      <PostList
-        posts={optimisticPosts}
-        className="mt-8"
-        handleDelete={deletePost}
-        session={session}
-      />
+      <section className="mt-8">
+        {optimisticPosts.map((props, index) => (
+          <div key={crypto.randomUUID()}>
+            {index > 0 && <Separator className="my-6" />}
+
+            <PostCard
+              handleDelete={deletePost}
+              isEditable={
+                !!session.user.roles?.includes("admin") ||
+                session.user.username === props.authorUsername
+              }
+              className="px-2"
+              {...props}
+            />
+          </div>
+        ))}
+      </section>
     </>
   );
 }

@@ -1,10 +1,18 @@
-import { AlignJustify, Bell, LogOut, Search, User } from "lucide-react";
+import {
+  AlignJustify,
+  Bell,
+  FolderKey,
+  LogOut,
+  Search,
+  User,
+} from "lucide-react";
 import Link from "next/link";
 
 import { auth, signOut } from "@/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -18,7 +26,7 @@ export async function PrivateHeader() {
   const session = await auth();
 
   if (!session) {
-    return null;
+    throw new Error("Not authenticated");
   }
 
   return (
@@ -37,7 +45,7 @@ export async function PrivateHeader() {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="end">
-              <div className="sm:hidden">
+              <DropdownMenuGroup className="sm:hidden">
                 <DropdownMenuItem asChild>
                   <Link href={`/search`}>
                     <Search className="mr-2 size-4" />
@@ -63,11 +71,24 @@ export async function PrivateHeader() {
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
-              </div>
+              </DropdownMenuGroup>
 
               <DropdownThemeToggle />
 
               <DropdownMenuSeparator />
+
+              {session.user.roles?.includes("admin") && (
+                <DropdownMenuGroup>
+                  <DropdownMenuItem asChild>
+                    <Link href="/edit-skills">
+                      <FolderKey className="mr-2 size-4" />
+                      <span>Edit skills</span>
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+                </DropdownMenuGroup>
+              )}
 
               <form
                 action={async () => {

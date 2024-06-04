@@ -2,7 +2,7 @@
 
 import { Check, ChevronsUpDown } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import { type ChangeEvent, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,7 +24,7 @@ import { useDebounce } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 export function Filters({ skills }: { skills: Skill[] }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const searchParams = useSearchParams();
 
@@ -33,7 +33,7 @@ export function Filters({ skills }: { skills: Skill[] }) {
   const pathname = usePathname();
 
   const onUsernameChange = useDebounce(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: ChangeEvent<HTMLInputElement>) => {
       const params = new URLSearchParams(searchParams.toString());
       params.set(event.target.name, event.target.value);
       router.push(pathname + "?" + params.toString());
@@ -72,11 +72,11 @@ export function Filters({ skills }: { skills: Skill[] }) {
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="w-[200px] p-0">
+        <PopoverContent className="w-56 p-0">
           <Command>
-            <CommandInput placeholder="Search framework..." />
+            <CommandInput placeholder="Search skill..." />
 
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No skill found.</CommandEmpty>
 
             <CommandList>
               <CommandGroup>
@@ -95,10 +95,8 @@ export function Filters({ skills }: { skills: Skill[] }) {
                   >
                     <Check
                       className={cn(
-                        "mr-2 h-4 w-4",
-                        searchParams.get("skillId") === id
-                          ? "opacity-100"
-                          : "opacity-0",
+                        "mr-2 size-4",
+                        searchParams.get("skillId") !== id && "opacity-0",
                       )}
                     />
                     {name}

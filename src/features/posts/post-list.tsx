@@ -7,12 +7,10 @@ import type { Post } from "./types";
 
 export function PostList({
   posts,
-  handleDelete,
   session,
   className,
 }: {
   posts: Post[];
-  handleDelete?: (id: string) => void;
   session: Session;
   className?: string;
 }) {
@@ -23,7 +21,6 @@ export function PostList({
           {index > 0 && <Separator className="my-6" />}
 
           <PostCard
-            handleDelete={handleDelete}
             isEditable={
               !!session.user.roles?.includes("admin") ||
               session.user.username === props.authorUsername
