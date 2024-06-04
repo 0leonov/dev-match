@@ -47,7 +47,12 @@ export async function updateUser(id: string, data: UpdateUserSchema) {
       .values(skills.map((skillId) => ({ userId: id, skillId })));
   }
 
-  if (username ?? bio ?? birthdate ?? gender) {
+  if (
+    username !== undefined ||
+    bio !== undefined ||
+    birthdate !== undefined ||
+    gender !== undefined
+  ) {
     await db.update(users).set(parsedData.data).where(eq(users.id, id));
   }
 
