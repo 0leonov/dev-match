@@ -21,6 +21,11 @@ export function UserList() {
       const username = searchParams.get("username") ?? undefined;
       const skillId = searchParams.get("skillId") ?? undefined;
 
+      if (!username && !skillId) {
+        setUsers([]);
+        return;
+      }
+
       setUsers(await searchUsers({ username, skillId }));
     });
   }, [searchParams]);

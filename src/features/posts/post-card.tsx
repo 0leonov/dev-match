@@ -1,3 +1,5 @@
+"use client";
+
 import { Ellipsis, Flag, Trash2 } from "lucide-react";
 import Link from "next/link";
 
