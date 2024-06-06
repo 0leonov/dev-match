@@ -40,7 +40,7 @@ export default function Login() {
             </Link>{" "}
             and{" "}
             <Link
-              href="/terms"
+              href="/privacy-policy"
               className="font-medium underline-offset-4 hover:underline"
             >
               Privacy Policy
