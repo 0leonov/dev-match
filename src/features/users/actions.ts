@@ -1,8 +1,8 @@
 "use server";
 
-import { auth, unstable_update } from "@/auth";
+import { auth, signOut, unstable_update } from "@/auth";
 
-import { getUserByUsername, getUsers, updateUser } from "./lib";
+import * as lib from "./lib";
 import { type UpdateUserSchema } from "./update-user-schema";
 
 export async function editProfile(data: UpdateUserSchema) {
@@ -13,7 +13,7 @@ export async function editProfile(data: UpdateUserSchema) {
   }
 
   try {
-    await updateUser(session.user.id, data);
+    await lib.updateUser(session.user.id, data);
   } catch (error) {
     return {
       success: false,
@@ -37,7 +37,7 @@ export async function checkUsernameAvailability(username: string) {
     return true;
   }
 
-  const user = await getUserByUsername(username);
+  const user = await lib.getUserByUsername(username);
 
   return !user;
 }
@@ -49,5 +49,17 @@ export async function searchUsers({
   username?: string;
   skillId?: string;
 }) {
-  return await getUsers({ username, skillId });
+  return await lib.getUsers({ username, skillId });
+}
+
+export async function deleteUser() {
+  const session = await auth();
+
+  if (!session) {
+    throw Error("Not authenticated");
+  }
+
+  await lib.deleteUser(session.user.id);
+
+  await signOut({ redirectTo: "/" });
 }

@@ -96,3 +96,7 @@ export async function getUserSkills(id: string): Promise<Skill[]> {
     .filter(({ id }) => id)
     .map(({ id, name }) => ({ id: id!, name }));
 }
+
+export async function deleteUser(id: string) {
+  await db.delete(users).where(eq(users.id, id));
+}
