@@ -18,7 +18,11 @@ export const config = {
   },
   callbacks: {
     authorized({ request, auth }) {
-      if (["/", "/about", "/terms"].includes(request.nextUrl.pathname)) {
+      if (
+        ["/", "/about", "/terms", "privacy-policy"].includes(
+          request.nextUrl.pathname,
+        )
+      ) {
         return true;
       }
 
